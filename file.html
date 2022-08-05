@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <link
+      href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <link href="main.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Upload a file</title>
+  </head>
+  <body>
+    <form
+      class="form-horizontal"
+      method="post"
+      enctype="multipart/form-data"
+      action="report.php"
+    >
+      <div class="control-group">
+        <label class="control-label" for="input-username">Username</label>
+        <div class="controls">
+          <input type="text" name="username" id="input-username" />
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Attachment</label>
+        <div class="controls">
+          <div class="upload-wrapper">
+            <input type="file" name="attachment" id="input-attachment" />
+            <button class="btn upload-file">
+              <i class="icon-upload"></i> Upload
+            </button>
+            <button class="btn link-file">
+              <i class="icon-globe"></i> Link
+            </button>
+            <div class="selected-file" style="display: none">
+              <span class="name muted">A placeholder for selected file</span>
+              <a class="btn-link upload-file">Upload</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input type="submit" class="btn btn-primary" />
+      <input type="reset" class="btn" />
+    </form>
+  </body>
+  <script type="text/javascript" src="rand.js"></script>
+</html>
