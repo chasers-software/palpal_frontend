@@ -4,6 +4,7 @@ import ReactPlayer from "react-player";
 import { Box, IconButton, Button, Typography } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
+import moment from "moment";
 
 const WatchVideo = () => {
   return (
@@ -25,6 +26,9 @@ const WatchVideo = () => {
             <Typography variant="h4">Video Title</Typography>
           </Box>
           <Box mt={2} sx={{ display: "flex", justifyContent: "space-evenly" }}>
+            <Typography component="span">
+              {moment([[2007, 0, 29]]).fromNow()}
+            </Typography>
             <Box>
               <IconButton onClick={console.log("increase like")}>
                 <ThumbUpIcon />
