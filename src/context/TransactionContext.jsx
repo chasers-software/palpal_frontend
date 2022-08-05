@@ -22,7 +22,7 @@ const createEthereumContract = () => {
 
 export const TransactionsProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+
   const connectWallet = async () => {
     try {
       const { ethereum } = window;
@@ -36,8 +36,6 @@ export const TransactionsProvider = ({ children }) => {
         method: "eth_requestAccounts",
       });
 
-      setLoggedIn(true);
-
       localStorage.setItem("loggedIn", JSON.stringify({ entry: true }));
 
       console.log("Connected", accounts[0]);
@@ -46,11 +44,41 @@ export const TransactionsProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const checkIfWalletIsConnected = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (!ethereum) {
+        console.log("Make sure you have metamask!");
+        return;
+      } else {
+        console.log("We have the ethereum object", ethereum);
+      }
+
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+
+      if (accounts.length !== 0) {
+        const account = accounts[0];
+        console.log("Found an authorized account:", account);
+        const logged = JSON.parse(localStorage.getItem("loggedIn")).entry;
+        logged && setCurrentAccount(account);
+      } else {
+        console.log("No authorized account found");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("loggedIn");
-    document.location.href = "/";
-    setLoggedIn(false);
+    window.location.reload();
   };
+
+  useEffect(() => {
+    checkIfWalletIsConnected();
+  }, []);
 
   return (
     <TransactionContext.Provider

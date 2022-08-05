@@ -1,12 +1,18 @@
 import React from "react";
-import { Grid, Paper, Typography } from "@mui/material";
-
+import { Link, Paper, Typography } from "@mui/material";
+import { Link as BrowserLink } from "react-router-dom";
 const VideoCard = ({ video }) => {
   return (
     <>
       <Paper sx={{ overflow: "hidden" }}>
-        <img src={video.thumbnail} height="200px" alt="" />
-        <Typography>{video.title}</Typography>
+        <Link
+          component={BrowserLink}
+          sx={{ textDecoration: "none", color: "inherit" }}
+          to={`video/${video.videoHash}`}
+        >
+          <img src={video.thumbnail} height="200px" alt="" />
+          <Typography>{video.title}</Typography>
+        </Link>
       </Paper>
     </>
   );

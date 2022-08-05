@@ -1,22 +1,22 @@
-.header{
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
-    padding:10px;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
 }
 
-.header__left{
-    display: flex;
-    align-items: center;
+.header__left {
+  display: flex;
+  align-items: center;
 }
 
 .header__input {
-    display:flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.header__right{
-    display: flex;
-    align-items: center;
-    gap:20px;
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }

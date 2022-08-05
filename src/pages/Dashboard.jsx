@@ -58,7 +58,7 @@ const Dashboard = () => {
         <Grid container spacing={2}>
           {dummyVideos.map((video, index) => {
             return (
-              <Grid item xs={2} sm={4} md={4} key={index}>
+              <Grid item xs={6} sm={4} md={4} lg={3} key={index}>
                 <VideoCard video={video} />
               </Grid>
             );
