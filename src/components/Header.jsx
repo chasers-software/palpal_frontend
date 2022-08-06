@@ -21,7 +21,7 @@ import {
 import { Link as BrowserLink, useNavigate } from "react-router-dom";
 import { TransactionContext } from "../context/TransactionContext";
 
-function Header() {
+function Header({ getSearchResults }) {
   const { logout } = useContext(TransactionContext);
   let navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -59,6 +59,9 @@ function Header() {
           type="search"
           size="small"
           fullWidth
+          onChange={(e) => {
+            getSearchResults(e.target.value);
+          }}
         />
         <IconButton>
           <Search />
