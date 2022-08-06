@@ -12,7 +12,7 @@ function App() {
         <Route path="/upload" element={<VideoUpload />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/video">
-          <Route path=":id" element={<WatchVideo />} />
+          <Route path=":hash/:name" element={<WatchVideo />} />
         </Route>
       </Routes>
     </BrowserRouter>

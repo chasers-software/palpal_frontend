@@ -158,6 +158,7 @@ export const TransactionsProvider = ({ children }) => {
         logout,
         uploadVideoData,
         getAllVideos,
+        videosData,
       }}
     >
       {children}
