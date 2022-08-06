@@ -30,12 +30,16 @@ const Landing = () => {
             height: "95vh",
           }}
         />
-        <Box sx={{ flex: 0.45 }}>
+
+        <Box sx={{ flex: 0.45, marginTop: "20%" }}>
+          <Typography fontWeight={600} variant="h4">
+            Create Memories with PalPal
+          </Typography>
           <Button
+            sx={{ margin: "5%" }}
             onClick={connectWallet}
             variant="contained"
             color="primary"
-            sx={{ marginTop: "50%" }}
           >
             Connect Wallet
           </Button>

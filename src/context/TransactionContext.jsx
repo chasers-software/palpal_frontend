@@ -25,6 +25,7 @@ export const TransactionsProvider = ({ children }) => {
   const [videosData, setVideosData] = useState([]);
   const [comments, setComments] = useState([]);
   const [tipsData, setTipsData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const connectWallet = async () => {
     try {
@@ -181,11 +182,14 @@ export const TransactionsProvider = ({ children }) => {
         }
 
         setVideosData(video);
+        setLoading(false);
         console.log("videos data", video);
       } else {
+        setLoading(false);
         console.log("No ethereum object");
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
       console.log("Unable to fetch videos");
     }
@@ -273,6 +277,8 @@ export const TransactionsProvider = ({ children }) => {
         getComments,
         comments,
         tipsData,
+        loading,
+        setLoading,
       }}
     >
       {children}
