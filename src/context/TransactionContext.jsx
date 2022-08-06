@@ -85,14 +85,21 @@ export const TransactionsProvider = ({ children }) => {
         );
         console.log("Mining...", uploadTxn.hash);
         await uploadTxn.wait();
+        window.alert("Mining! Please Wait...");
         console.log("Mined --", uploadTxn.hash);
-        console.log("Successfully uploaded");
+        window.alert("Successfully uploaded!");
+        setTimeout(function () {
+          window.location.reload();
+        }, 2000);
       } else {
         console.log("No ethereum object");
       }
     } catch (error) {
       console.log(error);
-      window.alert("Upload Unsuccessful");
+      window.alert("Upload Unsuccessful!");
+      setTimeout(function () {
+        window.location.reload();
+      }, 2000);
     }
   };
 

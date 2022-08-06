@@ -106,24 +106,24 @@ const VideoUpload = () => {
             }}
           >
             <Box>
-              <Typography>Upload Video</Typography>
-              <Input
+              <Typography mb={1}>Upload Video</Typography>
+              <input
                 required
                 type="file"
                 accept="video/*"
                 label="Video"
                 onChange={getFiles}
-              ></Input>
+              />
             </Box>
             <Box>
-              <Typography>Choose thumbnail</Typography>
-              <Input
+              <Typography mb={1}>Choose thumbnail</Typography>
+              <input
                 required
                 type="file"
                 accept="image/*"
                 label="Thumbnail"
                 onChange={getThumbnail}
-              ></Input>
+              />
             </Box>
             <Box>
               <TextField
