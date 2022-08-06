@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Header from "../components/Header";
 import { Web3Storage } from "web3.storage";
 import { API_TOKEN } from "../utils/constants";
@@ -6,6 +6,7 @@ import ReactPlayer from "react-player";
 import { Box } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
+import { TransactionContext } from "../context/TransactionContext";
 
 const VideoUpload = () => {
   const [video, setVideo] = useState(null);
@@ -17,6 +18,8 @@ const VideoUpload = () => {
   const [thumbnail, setThumbnail] = useState("");
   const [thumbnailName, setThumbnailName] = useState("");
   const [thumbnailId, setThumbnailId] = useState("");
+
+  const { uploadVideoData } = useContext(TransactionContext);
 
   function getFiles(event) {
     event.preventDefault();
@@ -41,20 +44,19 @@ const VideoUpload = () => {
       const cid = await client.put([video]);
       setVideoId(cid);
       console.log("stored files with cid:", cid);
-      storeThumbnail();
+      const thumbnailid = await storeThumbnail();
+      setThumbnailId(thumbnailid);
+      console.log("cid for thumb", thumbnailid);
 
-      const blockchainMetadata = {
-        _contentHash: cid + `/${videoname}`,
-        _thumbnailHash: thumbnailId + `/${thumbnailName}`,
-        _detailsHash: {
-          title: title,
-          description: description,
-          uploadDate: new Date(),
-        },
-      };
+      const contentHash = cid + `/${videoname}`;
+      const thumbnailHash = thumbnailid + `/${thumbnailName}`;
+      const detailHash = JSON.stringify({
+        title: title,
+        description: description,
+        uploadDate: new Date(),
+      });
 
-      const stringifiedMetadata = JSON.stringify(blockchainMetadata);
-      console.log("Sttringified metadata:", stringifiedMetadata);
+      uploadVideoData(contentHash, thumbnailHash, detailHash);
 
       return cid;
     } catch (error) {
@@ -66,12 +68,10 @@ const VideoUpload = () => {
     try {
       const client = makeStorageClient();
       const cid = await client.put([thumbnail]);
-      setThumbnailId(cid);
       console.log("thubnail cid:", cid);
       console.log("TITLE:", title);
 
       // some function to store on blockchain
-
 
       return cid;
     } catch (error) {

@@ -1,12 +1,19 @@
-import React from "react";
+import { React, useContext } from "react";
 import Header from "../components/Header";
 import ReactPlayer from "react-player";
 import { Box, IconButton, Button, Typography } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import moment from "moment";
+import { TransactionContext } from "../context/TransactionContext";
 
 const WatchVideo = () => {
+  const handleContractCall = () => {
+    console.log("Uploading Video");
+    //uploadVideoData("asddsf", "sfsdfad", "sfrteta");
+    getAllVideos();
+  };
+  const { uploadVideoData, getAllVideos } = useContext(TransactionContext);
   return (
     <>
       <Header />
@@ -30,7 +37,7 @@ const WatchVideo = () => {
               {moment([[2007, 0, 29]]).fromNow()}
             </Typography>
             <Box>
-              <IconButton onClick={console.log("increase like")}>
+              <IconButton onClick={handleContractCall}>
                 <ThumbUpIcon />
               </IconButton>
               <Typography component="span">Like Count</Typography>

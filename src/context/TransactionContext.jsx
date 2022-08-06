@@ -22,6 +22,7 @@ const createEthereumContract = () => {
 
 export const TransactionsProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
+  const [videosData, setVideosData] = useState([]);
 
   const connectWallet = async () => {
     try {
@@ -71,6 +72,76 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
+  const uploadVideoData = async (_videoHash, _thumbnailHash, _detailsHash) => {
+    try {
+      if (ethereum) {
+        const palpalContract = createEthereumContract();
+        const uploadTxn = await palpalContract.uploadContent(
+          _videoHash,
+          _thumbnailHash,
+          _detailsHash
+        );
+        console.log("Mining...", uploadTxn.hash);
+        await uploadTxn.wait();
+        console.log("Mined --", uploadTxn.hash);
+        console.log("Successfully uploaded");
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert("Upload Unsuccessful");
+    }
+  };
+
+  const getAllVideos = async () => {
+    try {
+      if (ethereum) {
+        const palpalContract = createEthereumContract();
+        const totalVideosCount = await palpalContract.contentCount();
+        const parsedCount = parseInt(totalVideosCount._hex, 16);
+        console.log("Videos Count", parsedCount);
+        const video = [];
+        for (let i = 1; i <= parsedCount; i++) {
+          const {
+            creator,
+            contentHash,
+            thumbnailHash,
+            detailsHash,
+            likesCount,
+            tipsCount,
+            commentsCount,
+          } = await palpalContract.contents(i);
+          const commentCount = parseInt(commentsCount._hex, 16);
+          const likeCount = parseInt(likesCount._hex, 16);
+          const tipCount = parseInt(tipsCount._hex, 16);
+          const detailsJSON = `'` + detailsHash + `'`;
+          console.log(typeof detailsHash);
+          //JSON.parse(detailsJSON);
+          //console.log(JSON.parse(detailsJSON));
+          console.log("our details ", JSON.parse(`'` + detailsHash + `'`));
+          video.push({
+            creator,
+            contentHash,
+            thumbnailHash,
+            detailsHash,
+            commentCount,
+            tipCount,
+            likeCount,
+          });
+        }
+
+        setVideosData(video);
+        console.log("videos data", video);
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert("Unable to fetch videos");
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("loggedIn");
     window.location.reload();
@@ -86,6 +157,8 @@ export const TransactionsProvider = ({ children }) => {
         connectWallet,
         currentAccount,
         logout,
+        uploadVideoData,
+        getAllVideos,
       }}
     >
       {children}
