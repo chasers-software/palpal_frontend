@@ -183,6 +183,27 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
+  const giveATip = async (_id) => {
+    try {
+      if (ethereum) {
+        const palpalContract = createEthereumContract();
+        const tipTxn = await palpalContract.tipCreator(_id, {
+          gasLimit: 300000,
+          value: ethers.utils.parseEther("0.01"),
+        });
+        console.log("Mining...", tipTxn.hash);
+        await tipTxn.wait();
+        console.log("Mined --", tipTxn.hash);
+        console.log("Successfully Tipped");
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert("Tip Unsuccessful");
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("loggedIn");
     window.location.reload();
@@ -203,6 +224,7 @@ export const TransactionsProvider = ({ children }) => {
         videosData,
         likeContent,
         commentContent,
+        giveATip,
       }}
     >
       {children}

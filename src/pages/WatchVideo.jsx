@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import ReactPlayer from "react-player";
 import { Box, IconButton, Button, Typography, TextField } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import PaidIcon from "@mui/icons-material/Paid";
 import CommentIcon from "@mui/icons-material/Comment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import moment from "moment";
@@ -11,7 +12,7 @@ import { useParams } from "react-router-dom";
 
 const WatchVideo = () => {
   const { hash, name } = useParams();
-  const { getAllVideos, videosData, likeContent, commentContent } =
+  const { getAllVideos, videosData, likeContent, commentContent, giveATip } =
     useContext(TransactionContext);
   const [comment, setComment] = useState("");
 
@@ -82,10 +83,26 @@ const WatchVideo = () => {
                   {currentVideo?.likeCount}
                 </Typography>
               </Box>
-
-              <Button color="primary" variant="contained" size="small">
-                Tip Creator
-              </Button>
+              <Box>
+                <IconButton onClick={() => likeContent(currentVideo.contentId)}>
+                  <PaidIcon />
+                </IconButton>
+                <Typography component="span">
+                  {currentVideo?.tipCount}
+                </Typography>
+              </Box>
+              <Box>
+                <IconButton>
+                  <PaidIcon />
+                </IconButton>
+                <Button
+                  onClick={() => giveATip(currentVideo.contentId)}
+                  color="primary"
+                  size="small"
+                >
+                  Tip Creator
+                </Button>
+              </Box>
             </Box>
           </Box>
           <Box p={3} ml={5} sx={{ flex: 0.3 }}>
