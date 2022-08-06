@@ -87,7 +87,7 @@ export const TransactionsProvider = ({ children }) => {
         await uploadTxn.wait();
         window.alert("Mining! Please Wait...");
         console.log("Mined --", uploadTxn.hash);
-        window.alert("Successfully uploaded!");
+        window.location.reload();
         setTimeout(function () {
           window.location.reload();
         }, 2000);
@@ -115,6 +115,7 @@ export const TransactionsProvider = ({ children }) => {
         await commentTxn.wait();
         console.log("Mined --", commentTxn.hash);
         console.log("Successfully commented");
+        window.location.reload();
       } else {
         console.log("No ethereum object");
       }
@@ -215,6 +216,7 @@ export const TransactionsProvider = ({ children }) => {
         await likeTxn.wait();
         console.log("Mined --", likeTxn.hash);
         console.log("Successfully Likeed");
+        window.location.reload();
       } else {
         console.log("No ethereum object");
       }
@@ -236,6 +238,7 @@ export const TransactionsProvider = ({ children }) => {
         await tipTxn.wait();
         console.log("Mined --", tipTxn.hash);
         console.log("Successfully Tipped");
+        window.location.reload();
       } else {
         console.log("No ethereum object");
       }
