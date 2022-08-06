@@ -103,7 +103,7 @@ const WatchVideo = () => {
               </Typography>
             </Box>
             <Typography color="#6d6d6e">
-              {moment([[currentVideo.uploadDate]]).fromNow()}
+              {moment(currentVideo.uploadDate).fromNow()}
             </Typography>
             <Box
               mt={2}
