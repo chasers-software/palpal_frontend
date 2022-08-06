@@ -16,6 +16,8 @@ Furthermore, this overall platform can be extended as a DAO (Decentralised Auton
 
 This repository contains the frontend code for the project
 
+The site is live at https://palpal.vercel.app/ . Create an wallet with metamask. Get some polygon testnet matic from the faucet and interact with it.
+
 
 ### Frontend For PalPal
 
