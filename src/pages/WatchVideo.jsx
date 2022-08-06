@@ -78,7 +78,7 @@ const WatchVideo = () => {
   //     console.log("Error on commenting", error);
   //   }
   // }
-  isMining && toast.loading("Mining...");
+  isMining && toast.loading("Mining...", { autoClose: false });
 
   console.log("current video", currentVideo);
   return (

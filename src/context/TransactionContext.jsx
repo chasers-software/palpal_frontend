@@ -102,6 +102,7 @@ export const TransactionsProvider = ({ children }) => {
     } catch (error) {
       setIsMining(false);
       console.log(error);
+      toast.dismiss();
       toast.error("Upload Unsuccessful!");
       setTimeout(function () {
         window.location.reload();
@@ -129,6 +130,7 @@ export const TransactionsProvider = ({ children }) => {
     } catch (error) {
       setIsMining(false);
       console.log(error);
+      toast.dismiss();
       toast.error("Comment Unsuccessful!");
     }
   };
@@ -145,6 +147,7 @@ export const TransactionsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      toast.dismiss();
       toast.error("Get Comment Unsuccessful!");
     }
   };
@@ -198,6 +201,7 @@ export const TransactionsProvider = ({ children }) => {
     } catch (error) {
       setLoading(false);
       console.log(error);
+      toast.dismiss();
       toast.error("Unable to fetch videos!");
     }
   };
@@ -214,6 +218,7 @@ export const TransactionsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      toast.dismiss();
       toast.error("Unable to fetch Tips!");
     }
   };
@@ -235,6 +240,7 @@ export const TransactionsProvider = ({ children }) => {
     } catch (error) {
       setIsMining(false);
       console.log(error);
+      toast.dismiss();
       toast.error("Like Unsuccessful!");
     }
   };
@@ -260,6 +266,7 @@ export const TransactionsProvider = ({ children }) => {
     } catch (error) {
       setIsMining(false);
       console.log(error);
+      toast.dismiss();
       toast.error("Tip Unsuccessful!");
     }
   };

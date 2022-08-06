@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { Web3Storage } from "web3.storage";
 import { API_TOKEN } from "../utils/constants";
 import ReactPlayer from "react-player";
-import { Box, Input, Typography, Button, Paper } from "@mui/material";
+import { Box, Typography, Button, Paper } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import { TransactionContext } from "../context/TransactionContext";
@@ -90,7 +90,7 @@ const VideoUpload = () => {
     }
   };
 
-  isMining && toast.loading("Minning...");
+  isMining && toast.loading("Mining...", { autoClose: false });
 
   return (
     <>

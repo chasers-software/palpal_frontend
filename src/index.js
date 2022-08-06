@@ -11,8 +11,10 @@ root.render(
     <ToastContainer
       position="top-right"
       hideProgressBar={true}
-      autoClose={false}
-      newestOnTop={false}
+      autoClose={5000}
+      closeButton={false}
+      closeOnClick={true}
+      newestOnTop={true}
       rtl={false}
       pauseOnFocusLoss
       draggable
