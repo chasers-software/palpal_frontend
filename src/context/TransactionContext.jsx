@@ -104,6 +104,7 @@ export const TransactionsProvider = ({ children }) => {
         const video = [];
         for (let i = 1; i <= parsedCount; i++) {
           const {
+            id,
             creator,
             contentHash,
             thumbnailHash,
@@ -112,12 +113,14 @@ export const TransactionsProvider = ({ children }) => {
             tipsCount,
             commentsCount,
           } = await palpalContract.contents(i);
+          const contentId = parseInt(id._hex, 16);
           const commentCount = parseInt(commentsCount._hex, 16);
           const likeCount = parseInt(likesCount._hex, 16);
           const tipCount = parseInt(tipsCount._hex, 16);
           const detailsJSON = JSON.parse(detailsHash);
           const { title, description, uploadDate } = detailsJSON;
           video.push({
+            contentId,
             creator,
             contentHash,
             thumbnailHash,
@@ -141,6 +144,24 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
+  const likeContent = async (_address) => {
+    try {
+      if (ethereum) {
+        const palpalContract = createEthereumContract();
+        const likeTxn = await palpalContract.likeContent(_address);
+        console.log("Mining...", likeTxn.hash);
+        await likeTxn.wait();
+        console.log("Mined --", likeTxn.hash);
+        console.log("Successfully Likeed");
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert("Like Unsuccessful");
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("loggedIn");
     window.location.reload();
@@ -159,6 +180,7 @@ export const TransactionsProvider = ({ children }) => {
         uploadVideoData,
         getAllVideos,
         videosData,
+        likeContent,
       }}
     >
       {children}

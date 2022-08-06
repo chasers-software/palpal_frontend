@@ -11,7 +11,8 @@ import { useParams } from "react-router-dom";
 
 const WatchVideo = () => {
   const { hash, name } = useParams();
-  const { getAllVideos, videosData } = useContext(TransactionContext);
+  const { getAllVideos, videosData, likeContent } =
+    useContext(TransactionContext);
   const currentVideo = videosData.find(
     (video) =>
       video?.contentHash.split("/")[0] === hash &&
@@ -63,7 +64,7 @@ const WatchVideo = () => {
               sx={{ display: "flex", justifyContent: "space-evenly" }}
             >
               <Box>
-                <IconButton>
+                <IconButton onClick={() => likeContent(currentVideo.contentId)}>
                   <ThumbUpIcon />
                 </IconButton>
                 <Typography component="span">
