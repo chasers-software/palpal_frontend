@@ -94,6 +94,27 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
+  const commentContent = async (videoId, _comment) => {
+    try {
+      if (ethereum) {
+        const palpalContract = createEthereumContract();
+        const commentTxn = await palpalContract.commentContent(
+          videoId,
+          _comment
+        );
+        console.log("Mining...", commentTxn.hash);
+        await commentTxn.wait();
+        console.log("Mined --", commentTxn.hash);
+        console.log("Successfully commented");
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert("Comment Unsuccessful");
+    }
+  };
+
   const getAllVideos = async () => {
     try {
       if (ethereum) {
@@ -181,6 +202,7 @@ export const TransactionsProvider = ({ children }) => {
         getAllVideos,
         videosData,
         likeContent,
+        commentContent,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import { React, useContext, useEffect } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import ReactPlayer from "react-player";
 import { Box, IconButton, Button, Typography, TextField } from "@mui/material";
@@ -11,8 +11,10 @@ import { useParams } from "react-router-dom";
 
 const WatchVideo = () => {
   const { hash, name } = useParams();
-  const { getAllVideos, videosData, likeContent } =
+  const { getAllVideos, videosData, likeContent, commentContent } =
     useContext(TransactionContext);
+  const [comment, setComment] = useState("");
+
   const currentVideo = videosData.find(
     (video) =>
       video?.contentHash.split("/")[0] === hash &&
@@ -21,6 +23,15 @@ const WatchVideo = () => {
   useEffect(() => {
     getAllVideos();
   }, []);
+
+  // function postComment() {
+  //   try {
+  //     commentContent(3, comment);
+  //     console.log("Commetnt", comment);
+  //   } catch (error) {
+  //     console.log("Error on commenting", error);
+  //   }
+  // }
 
   console.log("current video", currentVideo);
   return (
@@ -83,8 +94,15 @@ const WatchVideo = () => {
             </IconButton>
             <Typography>{currentVideo?.commentCount} Comments</Typography>
             <Box className="comment_input" sx={{ margin: "10px auto" }}>
-              <TextField size="small" label="Enter your comment"></TextField>
+              <TextField
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                size="small"
+                label="Enter your comment"
+              ></TextField>
+
               <Button
+                onClick={() => commentContent(currentVideo.contentId, comment)}
                 component="span"
                 variant="contained"
                 sx={{ display: "inline-block", marginLeft: "10px" }}
