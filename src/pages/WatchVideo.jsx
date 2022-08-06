@@ -24,6 +24,7 @@ import Dialog from "@mui/material/Dialog";
 import moment from "moment";
 import { TransactionContext } from "../context/TransactionContext";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { CircularProgress } from "@mui/material";
 
 const WatchVideo = () => {
@@ -40,6 +41,7 @@ const WatchVideo = () => {
     tipsData,
     loading,
     setLoading,
+    isMining,
   } = useContext(TransactionContext);
   const [comment, setComment] = useState("");
   const [tipsOpen, setTipsOpen] = useState(false);
@@ -75,6 +77,7 @@ const WatchVideo = () => {
   //     console.log("Error on commenting", error);
   //   }
   // }
+  isMining && toast.loading("Mining...");
 
   console.log("current video", currentVideo);
   return (

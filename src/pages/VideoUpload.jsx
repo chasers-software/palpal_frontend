@@ -7,6 +7,7 @@ import { Box, Input, Typography, Button, Paper } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import { TransactionContext } from "../context/TransactionContext";
+import { toast } from "react-toastify";
 
 const VideoUpload = () => {
   const [video, setVideo] = useState(null);
@@ -20,7 +21,7 @@ const VideoUpload = () => {
   const [thumbnailName, setThumbnailName] = useState("");
   const [thumbnailId, setThumbnailId] = useState("");
 
-  const { uploadVideoData } = useContext(TransactionContext);
+  const { uploadVideoData, isMining } = useContext(TransactionContext);
 
   function getFiles(event) {
     event.preventDefault();
@@ -88,6 +89,8 @@ const VideoUpload = () => {
       window.alert("All fields are requried!");
     }
   };
+
+  isMining && toast.loading("Minning...");
 
   return (
     <>

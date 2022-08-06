@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 
 import { contractABI, contractAddress } from "../utils/constants";
+import { toast } from "react-toastify";
 
 export const TransactionContext = React.createContext();
 
@@ -26,6 +27,7 @@ export const TransactionsProvider = ({ children }) => {
   const [comments, setComments] = useState([]);
   const [tipsData, setTipsData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isMining, setIsMining] = useState(false);
 
   const connectWallet = async () => {
     try {
@@ -85,22 +87,24 @@ export const TransactionsProvider = ({ children }) => {
           _detailsHash
         );
         console.log("Mining...", uploadTxn.hash);
+        setIsMining(true);
         await uploadTxn.wait();
-        window.alert("Mining! Please Wait...");
+        setIsMining(false);
         console.log("Mined --", uploadTxn.hash);
-        window.location.reload();
+        toast.success("Upload Successful!");
         setTimeout(function () {
           window.location.reload();
-        }, 2000);
+        }, 3000);
       } else {
         console.log("No ethereum object");
       }
     } catch (error) {
+      setIsMining(false);
       console.log(error);
-      window.alert("Upload Unsuccessful!");
+      toast.error("Upload Unsuccessful!");
       setTimeout(function () {
         window.location.reload();
-      }, 2000);
+      }, 3000);
     }
   };
 
@@ -112,17 +116,19 @@ export const TransactionsProvider = ({ children }) => {
           videoId,
           _comment
         );
+        setIsMining(true);
         console.log("Mining...", commentTxn.hash);
         await commentTxn.wait();
         console.log("Mined --", commentTxn.hash);
-        console.log("Successfully commented");
+        setIsMining(false);
         window.location.reload();
       } else {
         console.log("No ethereum object");
       }
     } catch (error) {
+      setIsMining(false);
       console.log(error);
-      window.alert("Comment Unsuccessful");
+      toast.error("Comment Unsuccessful!");
     }
   };
 
@@ -138,7 +144,7 @@ export const TransactionsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
-      window.alert("Get Comment Unsuccessful");
+      toast.error("Get Comment Unsuccessful!");
     }
   };
 
@@ -191,7 +197,7 @@ export const TransactionsProvider = ({ children }) => {
     } catch (error) {
       setLoading(false);
       console.log(error);
-      console.log("Unable to fetch videos");
+      toast.error("Unable to fetch videos!");
     }
   };
 
@@ -207,7 +213,7 @@ export const TransactionsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
-      window.alert("Unable to fetch Tips");
+      toast.error("Unable to fetch Tips!");
     }
   };
 
@@ -216,17 +222,19 @@ export const TransactionsProvider = ({ children }) => {
       if (ethereum) {
         const palpalContract = createEthereumContract();
         const likeTxn = await palpalContract.likeContent(_address);
+        setIsMining(true);
         console.log("Mining...", likeTxn.hash);
         await likeTxn.wait();
         console.log("Mined --", likeTxn.hash);
-        console.log("Successfully Likeed");
+        setIsMining(false);
         window.location.reload();
       } else {
         console.log("No ethereum object");
       }
     } catch (error) {
+      setIsMining(false);
       console.log(error);
-      window.alert("Like Unsuccessful");
+      toast.error("Like Unsuccessful!");
     }
   };
 
@@ -238,17 +246,20 @@ export const TransactionsProvider = ({ children }) => {
           gasLimit: 300000,
           value: ethers.utils.parseEther("0.01"),
         });
+        setIsMining(true);
         console.log("Mining...", tipTxn.hash);
         await tipTxn.wait();
         console.log("Mined --", tipTxn.hash);
-        console.log("Successfully Tipped");
+        setIsMining(false);
+        toast.success("Tip successful!");
         window.location.reload();
       } else {
         console.log("No ethereum object");
       }
     } catch (error) {
+      setIsMining(false);
       console.log(error);
-      window.alert("Tip Unsuccessful");
+      toast.error("Tip Unsuccessful!");
     }
   };
 
@@ -279,6 +290,7 @@ export const TransactionsProvider = ({ children }) => {
         tipsData,
         loading,
         setLoading,
+        isMining,
       }}
     >
       {children}
