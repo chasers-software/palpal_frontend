@@ -195,7 +195,7 @@ const WatchVideo = () => {
                     <PaidIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={tipper} />
+                <ListItemText primary={`${tipper} - 0.01 MATIC`} />
               </ListItem>
             ))}
           </List>
