@@ -115,16 +115,15 @@ export const TransactionsProvider = ({ children }) => {
           const commentCount = parseInt(commentsCount._hex, 16);
           const likeCount = parseInt(likesCount._hex, 16);
           const tipCount = parseInt(tipsCount._hex, 16);
-          const detailsJSON = `'` + detailsHash + `'`;
-          console.log(typeof detailsHash);
-          //JSON.parse(detailsJSON);
-          //console.log(JSON.parse(detailsJSON));
-          console.log("our details ", JSON.parse(`'` + detailsHash + `'`));
+          const detailsJSON = JSON.parse(detailsHash);
+          const { title, description, uploadDate } = detailsJSON;
           video.push({
             creator,
             contentHash,
             thumbnailHash,
-            detailsHash,
+            title,
+            description,
+            uploadDate,
             commentCount,
             tipCount,
             likeCount,
