@@ -1,7 +1,15 @@
 import { React, useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import ReactPlayer from "react-player";
-import { Box, IconButton, Button, Typography, TextField } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Button,
+  Typography,
+  TextField,
+  Card,
+  CardContent,
+} from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import PaidIcon from "@mui/icons-material/Paid";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -12,8 +20,15 @@ import { useParams } from "react-router-dom";
 
 const WatchVideo = () => {
   const { hash, name } = useParams();
-  const { getAllVideos, videosData, likeContent, commentContent, giveATip } =
-    useContext(TransactionContext);
+  const {
+    getAllVideos,
+    videosData,
+    likeContent,
+    commentContent,
+    giveATip,
+    comments,
+    getComments,
+  } = useContext(TransactionContext);
   const [comment, setComment] = useState("");
 
   const currentVideo = videosData.find(
@@ -23,6 +38,10 @@ const WatchVideo = () => {
   );
   useEffect(() => {
     getAllVideos();
+  }, []);
+
+  useEffect(() => {
+    getComments(currentVideo.contentId);
   }, []);
 
   // function postComment() {
@@ -127,10 +146,18 @@ const WatchVideo = () => {
                 Post
               </Button>
             </Box>
-            <Box className="comments">
-              <Typography>Wallet Address</Typography>
-              <Typography>Comment</Typography>
-            </Box>
+            {comments.map((cmt) => {
+              return (
+                <Box className="comments">
+                  <Card sx={{ mb: 3 }}>
+                    <CardContent>
+                      <Typography fontSize={13}>{cmt[0]}</Typography>
+                      <Typography fontWeight={500}>{cmt[1]}</Typography>
+                    </CardContent>
+                  </Card>
+                </Box>
+              );
+            })}
           </Box>
         </Box>
       ) : (

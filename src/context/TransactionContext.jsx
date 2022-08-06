@@ -23,6 +23,7 @@ const createEthereumContract = () => {
 export const TransactionsProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [videosData, setVideosData] = useState([]);
+  const [comments, setComments] = useState([]);
 
   const connectWallet = async () => {
     try {
@@ -112,6 +113,22 @@ export const TransactionsProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       window.alert("Comment Unsuccessful");
+    }
+  };
+
+  const getComments = async (videoId) => {
+    try {
+      if (ethereum) {
+        const palpalContract = createEthereumContract();
+        const commentData = await palpalContract.getComments(videoId);
+        setComments(commentData);
+        console.log("Comments fetched", commentData);
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert("Get Comment Unsuccessful");
     }
   };
 
@@ -225,6 +242,8 @@ export const TransactionsProvider = ({ children }) => {
         likeContent,
         commentContent,
         giveATip,
+        getComments,
+        comments,
       }}
     >
       {children}
