@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { Web3Storage } from "web3.storage";
 import { API_TOKEN } from "../utils/constants";
 import ReactPlayer from "react-player";
-import { Box } from "@mui/material";
+import { Box, Input, Typography, Button, Paper } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import { TransactionContext } from "../context/TransactionContext";
@@ -14,6 +14,7 @@ const VideoUpload = () => {
   const [videoname, setVideoname] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [thumbnail, setThumbnail] = useState("");
   const [thumbnailName, setThumbnailName] = useState("");
@@ -78,60 +79,108 @@ const VideoUpload = () => {
       console.log("Error storing thumbnail:", error);
     }
   }
+  const handleUpload = () => {
+    console.log(video, thumbnail, title);
+    if (video && thumbnail && title && !isSubmitted) {
+      setIsSubmitted(true);
+      storeFiles();
+    } else {
+      window.alert("All fields are requried!");
+    }
+  };
 
   return (
     <>
       <Header />
-      <div>
-        <div>Video Upload</div>;
-        <input
-          type="file"
-          accept="video/*"
-          name="video"
-          onChange={getFiles}
-        ></input>
-        Choose thumbnail
-        <input
-          type="file"
-          accept="image/*"
-          name="video"
-          onChange={getThumbnail}
-        ></input>
-        <TextField
-          label="Video Title"
-          variant="outlined"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          autoComplete="off"
-          inputProps={{ style: { fontSize: 15 } }}
-          InputLabelProps={{ style: { fontSize: 15, color: "GrayText" } }}
-        />
-        <TextField
-          label="Video Description"
-          variant="outlined"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          autoComplete="off"
-          inputProps={{ style: { fontSize: 15 } }}
-          InputLabelProps={{ style: { fontSize: 15, color: "GrayText" } }}
-        />
-        <button onClick={storeFiles}>Upload</button>
-      </div>
-
-      <div>Watch Video</div>
-      {videoid && thumbnailId ? (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <ReactPlayer
-            controls
-            url={`https://ipfs.io/ipfs/${videoid}/${videoname}`}
-            light={`https://ipfs.io/ipfs/${thumbnailId}/${thumbnailName}`}
-          />
+      <Box pl={5} sx={{ display: "flex" }}>
+        <Paper elevation={3}>
+          <Box
+            p={5}
+            sx={{
+              display: "flex",
+              gap: "20px",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignContent: "center",
+              flex: 0.4,
+            }}
+          >
+            <Box>
+              <Typography>Upload Video</Typography>
+              <Input
+                required
+                type="file"
+                accept="video/*"
+                label="Video"
+                onChange={getFiles}
+              ></Input>
+            </Box>
+            <Box>
+              <Typography>Choose thumbnail</Typography>
+              <Input
+                required
+                type="file"
+                accept="image/*"
+                label="Thumbnail"
+                onChange={getThumbnail}
+              ></Input>
+            </Box>
+            <Box>
+              <TextField
+                required
+                label="Video Title"
+                variant="outlined"
+                size="small"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                autoComplete="off"
+              />
+            </Box>
+            <Box>
+              <TextField
+                label="Video Description"
+                variant="outlined"
+                size="small"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                autoComplete="off"
+              />
+            </Box>
+            <Button variant="contained" onClick={handleUpload}>
+              {isSubmitted ? (
+                videoid && thumbnailId ? (
+                  <Typography>Uploaded</Typography>
+                ) : (
+                  <>
+                    <Typography mr={5}>Uploading...</Typography>
+                    <CircularProgress sx={{ color: "#ffff" }} />
+                  </>
+                )
+              ) : (
+                <Typography>Upload</Typography>
+              )}
+            </Button>
+          </Box>
+        </Paper>
+        <Box sx={{ flex: 0.2 }}></Box>
+        <Box
+          sx={{
+            justifyContent: "center",
+            alignContent: "center",
+            flex: 0.4,
+          }}
+        >
+          {videoid && thumbnailId ? (
+            <ReactPlayer
+              controls
+              url={`https://ipfs.io/ipfs/${videoid}/${videoname}`}
+              light={`https://ipfs.io/ipfs/${thumbnailId}/${thumbnailName}`}
+            />
+          ) : (
+            <Typography>Upload Video to Watch it Here.</Typography>
+          )}
         </Box>
-      ) : (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <CircularProgress />
-        </Box>
-      )}
+      </Box>
     </>
   );
 };
