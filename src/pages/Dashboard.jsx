@@ -23,6 +23,7 @@ const Dashboard = () => {
   }, [videosData]);
 
   useEffect(() => {
+    setLoading(true);
     getAllVideos();
   }, []);
 

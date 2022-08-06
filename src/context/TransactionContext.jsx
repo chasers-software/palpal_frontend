@@ -26,7 +26,7 @@ export const TransactionsProvider = ({ children }) => {
   const [videosData, setVideosData] = useState([]);
   const [comments, setComments] = useState([]);
   const [tipsData, setTipsData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isMining, setIsMining] = useState(false);
 
   const connectWallet = async () => {
