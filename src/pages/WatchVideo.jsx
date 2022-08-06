@@ -28,7 +28,7 @@ import { toast } from "react-toastify";
 import { CircularProgress } from "@mui/material";
 
 const WatchVideo = () => {
-  const { hash, name } = useParams();
+  const { id } = useParams();
   const {
     getAllVideos,
     videosData,
@@ -48,8 +48,9 @@ const WatchVideo = () => {
 
   const currentVideo = videosData.find(
     (video) =>
-      video?.contentHash.split("/")[0] === hash &&
-      video?.contentHash.split("/")[1] === name
+      // video?.contentHash.split("/")[0] === hash &&
+      // video?.contentHash.split("/")[1] === name
+      video?.contentId === Number(id)
   );
 
   useEffect(() => {
@@ -100,7 +101,7 @@ const WatchVideo = () => {
                 <ReactPlayer
                   width="100%"
                   controls
-                  url={`https://ipfs.io/ipfs/${hash}/${name}`}
+                  url={`https://ipfs.io/ipfs/${currentVideo.contentHash}`}
                 />
                 <Box pt={2}>
                   <Typography variant="h4">{currentVideo.title}</Typography>

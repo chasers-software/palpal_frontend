@@ -11,7 +11,7 @@ const VideoCard = ({ video }) => {
         <Link
           component={BrowserLink}
           sx={{ textDecoration: "none", color: "inherit" }}
-          to={`video/${video?.contentHash}`}
+          to={`video/${video?.contentId}`}
         >
           <img
             src={`https://ipfs.io/ipfs/${video?.thumbnailHash}`}

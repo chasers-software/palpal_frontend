@@ -14,7 +14,7 @@ function App() {
           <Route path="/upload" element={<VideoUpload />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/video">
-            <Route path=":hash/:name" element={<WatchVideo />} />
+            <Route path=":id" element={<WatchVideo />} />
           </Route>
         </Routes>
       </TransactionsProvider>
