@@ -47,7 +47,7 @@ function Header({ getSearchResults }) {
           component={BrowserLink}
           to="/"
         >
-          <Typography ml={1} fontWeight={500}>
+          <Typography fontSize={20} ml={1} fontWeight={600}>
             Pal Pal
           </Typography>
         </Link>

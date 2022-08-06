@@ -79,13 +79,13 @@ const WatchVideo = () => {
   console.log("current video", currentVideo);
   return (
     <>
+      <Header />
       {loading ? (
         <CircularProgress
           sx={{ margin: "auto", position: "absolute", top: "48%", left: "48%" }}
         />
       ) : (
         <>
-          <Header />
           {currentVideo ? (
             <Box p={5} sx={{ display: "flex", flexDirection: "row" }}>
               <Box

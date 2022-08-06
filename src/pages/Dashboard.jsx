@@ -29,13 +29,13 @@ const Dashboard = () => {
 
   return (
     <>
+      <Header getSearchResults={getSearchResults} />
       {loading ? (
         <CircularProgress
           sx={{ margin: "auto", position: "absolute", top: "48%", left: "48%" }}
         />
       ) : (
         <>
-          <Header getSearchResults={getSearchResults} />
           <Box p={2}>
             <Grid container spacing={2}>
               {allVideos.map((video, index) => {
