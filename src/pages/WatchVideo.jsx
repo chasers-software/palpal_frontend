@@ -52,12 +52,16 @@ const WatchVideo = () => {
   }, []);
 
   useEffect(() => {
-    getComments(currentVideo.contentId);
-  }, []);
+    if (currentVideo) {
+      getComments(currentVideo.contentId);
+    }
+  }, [currentVideo]);
 
   useEffect(() => {
-    getAllTippers(currentVideo.contentId);
-  }, []);
+    if (currentVideo) {
+      getAllTippers(currentVideo.contentId);
+    }
+  }, [currentVideo]);
 
   // function postComment() {
   //   try {
