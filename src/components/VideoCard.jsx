@@ -17,6 +17,7 @@ const VideoCard = ({ video }) => {
             src={`https://ipfs.io/ipfs/${video?.thumbnailHash}`}
             height="200px"
             alt=""
+            width="100%"
           />
           <Box p={2}>
             <Box sx={{ display: "flex", justifyContents: "flex-start" }}>

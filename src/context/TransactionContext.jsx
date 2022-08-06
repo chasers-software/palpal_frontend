@@ -91,7 +91,7 @@ export const TransactionsProvider = ({ children }) => {
         await uploadTxn.wait();
         setIsMining(false);
         console.log("Mined --", uploadTxn.hash);
-        toast.success("Upload Successful!");
+        toast.success("Upload Successful! View your NFT in OpenSea");
         setTimeout(function () {
           window.location.reload();
         }, 3000);
