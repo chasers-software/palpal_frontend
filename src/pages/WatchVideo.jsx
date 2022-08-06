@@ -117,7 +117,7 @@ const WatchVideo = () => {
                 >
                   <AccountCircleIcon size="small" />
                   <Typography ml={1} component="span">
-                    {currentVideo.creator.substr(0, 10)}...
+                    {currentVideo.creator}
                   </Typography>
                 </Box>
                 <Typography color="#6d6d6e">

@@ -91,10 +91,11 @@ export const TransactionsProvider = ({ children }) => {
         await uploadTxn.wait();
         setIsMining(false);
         console.log("Mined --", uploadTxn.hash);
-        toast.success("Upload Successful! View your NFT in OpenSea");
+        toast.success("Upload Successful!");
+        toast.success("View your NFT in OpenSea!");
         setTimeout(function () {
           window.location.reload();
-        }, 3000);
+        }, 4000);
       } else {
         console.log("No ethereum object");
       }
@@ -104,7 +105,7 @@ export const TransactionsProvider = ({ children }) => {
       toast.error("Upload Unsuccessful!");
       setTimeout(function () {
         window.location.reload();
-      }, 3000);
+      }, 4000);
     }
   };
 
