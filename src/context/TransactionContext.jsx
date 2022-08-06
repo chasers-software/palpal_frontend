@@ -24,6 +24,7 @@ export const TransactionsProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [videosData, setVideosData] = useState([]);
   const [comments, setComments] = useState([]);
+  const [tipsData, setTipsData] = useState([]);
 
   const connectWallet = async () => {
     try {
@@ -178,7 +179,23 @@ export const TransactionsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
-      window.alert("Unable to fetch videos");
+      console.log("Unable to fetch videos");
+    }
+  };
+
+  const getAllTippers = async (_id) => {
+    try {
+      if (ethereum) {
+        const palpalContract = createEthereumContract();
+        const Tips = await palpalContract.getTips(_id);
+        console.log("All Tips", Tips);
+        setTipsData(Tips);
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert("Unable to fetch Tips");
     }
   };
 
@@ -236,6 +253,7 @@ export const TransactionsProvider = ({ children }) => {
         connectWallet,
         currentAccount,
         logout,
+        getAllTippers,
         uploadVideoData,
         getAllVideos,
         videosData,
@@ -244,6 +262,7 @@ export const TransactionsProvider = ({ children }) => {
         giveATip,
         getComments,
         comments,
+        tipsData,
       }}
     >
       {children}

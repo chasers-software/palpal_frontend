@@ -14,6 +14,13 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import PaidIcon from "@mui/icons-material/Paid";
 import CommentIcon from "@mui/icons-material/Comment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Avatar from "@mui/material/Avatar";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
 import moment from "moment";
 import { TransactionContext } from "../context/TransactionContext";
 import { useParams } from "react-router-dom";
@@ -28,20 +35,28 @@ const WatchVideo = () => {
     giveATip,
     comments,
     getComments,
+    getAllTippers,
+    tipsData,
   } = useContext(TransactionContext);
   const [comment, setComment] = useState("");
+  const [tipsOpen, setTipsOpen] = useState(false);
 
   const currentVideo = videosData.find(
     (video) =>
       video?.contentHash.split("/")[0] === hash &&
       video?.contentHash.split("/")[1] === name
   );
+
   useEffect(() => {
     getAllVideos();
   }, []);
 
   useEffect(() => {
     getComments(currentVideo.contentId);
+  }, []);
+
+  useEffect(() => {
+    getAllTippers(currentVideo.contentId);
   }, []);
 
   // function postComment() {
@@ -103,7 +118,11 @@ const WatchVideo = () => {
                 </Typography>
               </Box>
               <Box>
-                <IconButton onClick={() => likeContent(currentVideo.contentId)}>
+                <IconButton
+                  onClick={() => {
+                    setTipsOpen(true);
+                  }}
+                >
                   <PaidIcon />
                 </IconButton>
                 <Typography component="span">
@@ -165,6 +184,29 @@ const WatchVideo = () => {
           No such Video
         </Typography>
       )}
+      <Dialog onClose={() => setTipsOpen(false)} open={tipsOpen}>
+        <DialogTitle>Tips</DialogTitle>
+        {tipsData.length > 0 ? (
+          <List sx={{ pt: 0 }}>
+            {tipsData.map((tipper) => (
+              <ListItem key={tipper}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <PaidIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={tipper} />
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <List sx={{ pt: 0 }}>
+            <ListItem>
+              <ListItemText primary={`No Tips Received`} />
+            </ListItem>
+          </List>
+        )}
+      </Dialog>
     </>
   );
 };
