@@ -92,7 +92,7 @@ const VideoUpload = () => {
   return (
     <>
       <Header />
-      <Box pl={5} sx={{ display: "flex" }}>
+      <Box mt={10} pl={5} sx={{ display: "flex" }}>
         <Paper elevation={3}>
           <Box
             p={5}
@@ -177,7 +177,9 @@ const VideoUpload = () => {
               light={`https://ipfs.io/ipfs/${thumbnailId}/${thumbnailName}`}
             />
           ) : (
-            <Typography>Upload Video to Watch it Here.</Typography>
+            <Typography marginTop={20}>
+              Upload Video to Watch it Here.
+            </Typography>
           )}
         </Box>
       </Box>
